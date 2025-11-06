@@ -21,8 +21,8 @@ Trip Ready generates personalized packing lists based on destination weather, tr
 
 ## 🛠️ Tech Stack
 
-**Frontend:** Next.js 14, React, Redux, TypeScript, Tailwind CSS, Material-UI
-**Design:** Figma
+**Frontend:** Next.js 14, React, Redux, TypeScript, Tailwind CSS, Material-UI   
+**Design:** Figma   
 **Backend:** Express, Node.js, Prisma, PostgreSQL  
 **Infrastructure:** Redis, BullMQ, AWS S3, Docker  
 **Testing:** Jest, Playwright  
