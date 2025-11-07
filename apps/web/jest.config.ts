@@ -7,20 +7,21 @@ import type {Config} from 'jest';
 import nextJest from 'next/jest.js'
 
 const createJestConfig = nextJest({
-  dir: './apps/web'
+  dir: './',
 })
 
-const config: Config = createJestConfig({
-  // Add any custom config to be passed to Jest
-  // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  // testEnvironment: 'node',
-  // testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
-  // moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  // collectCoverageFrom: ['src/**/*.{ts,tsx}'],
-  // coverageDirectory: 'coverage',
-  // coverageReporters: ['json', 'lcov', 'text', 'clover'],
-  // coverageThreshold: {
-  //   global: {
+const config: Config = {
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  testEnvironment: 'jsdom',
+  // All imported modules in your tests should be mocked automatically
+  // automock: false,
+
+  // Stop running tests after `n` failures
+  // bail: 0,
+
+  // The directory where Jest should store its cached dependency information
+  // cacheDirectory: "/private/var/folders/4v/mdmh5clx57n2x12pq7vdn6_w0000gn/T/jest_dx",
+
   // Automatically clear mock calls, instances, contexts and results before every test
   clearMocks: true,
 
@@ -204,4 +205,7 @@ const config: Config = createJestConfig({
   // watchman: true,
 };
 
-export default config;
+export default createJestConfig(config);
+
+
+

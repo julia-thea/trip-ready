@@ -1,18 +1,7 @@
-import Image from "next/image";
-
-function MyButton() {
-  return (
-    <button>
-      I'm a button
-    </button>
-  );
-}
-
 export default function MyApp() {
   return (
     <div>
-      <h1>Welcome to my app</h1>
-      <MyButton />
+      <h1>Welcome to Trip Ready</h1>
     </div>
   );
 }
