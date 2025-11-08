@@ -1,13 +1,13 @@
-import { Router, Request, Response } from 'express'
+import { Router, Request, Response } from 'express';
 
 const router = Router();
 
 router.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!')
-})
+  res.send('Hello World!');
+});
 
 router.get('/health', (req: Request, res: Response) => {
-    res.status(200).json({ status: 'ok' })
-})
+  res.status(200).json({ status: 'ok' });
+});
 
-export default router
+export default router;

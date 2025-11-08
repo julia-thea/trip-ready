@@ -1,4 +1,4 @@
-import type { Config } from 'jest'
+import type { Config } from 'jest';
 
 const config: Config = {
   preset: 'ts-jest',
@@ -10,15 +10,15 @@ const config: Config = {
   coverageProvider: 'v8',
   extensionsToTreatAsEsm: ['.ts'],
   moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.js$': '$1',
+    '^(\\.{1,2}/.*)\\.js$': '$1'
   },
   globals: {
     'ts-jest': {
       tsconfig: {
-        esModuleInterop: true,
-      },
-    },
-  },
-}
+        esModuleInterop: true
+      }
+    }
+  }
+};
 
-export default config
+export default config;
