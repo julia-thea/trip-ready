@@ -1,0 +1,38 @@
+{
+  "name": "trip-ready",
+  "version": "1.0.0",
+  "description": "Built because I'm tired of forgetting chargers. Generates smart packing lists from 50+ templates, weather data &amp; your past trips. Next.js · TypeScript · Express · PostgreSQL · Docker",
+  "homepage": "https://github.com/julia-thea/trip-ready#readme",
+  "bugs": {
+    "url": "https://github.com/julia-thea/trip-ready/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julia-thea/trip-ready.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint",
+    "lint:web": "eslint apps/web",
+    "lint:api": "eslint apps/api",
+    "prettify": "npx prettier --write ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.5.0",
+    "jiti": "^2.6.1",
+    "typescript-eslint": "^8.46.3"
+  },
+  "dependencies": {
+    "prettier": "^3.6.2"
+  }
+}

@@ -1,12 +1,12 @@
 # Trip Ready
-Built because I'm tired of forgetting chargers. Generates smart packing lists from 50+ templates, weather data &amp; your past trips. Next.js · TypeScript · Express · PostgreSQL · Docker
 
+Built because I'm tired of forgetting chargers. Generates smart packing lists from 50+ templates, weather data &amp; your past trips. Next.js · TypeScript · Express · PostgreSQL · Docker
 
 **Smart packing lists for every journey.**
 
 Trip Ready generates personalized packing lists based on destination weather, trip type, and duration. Collaborate with travel companions, save preferences, and never forget essentials.
 
-🔗 **Live Demo:** 
+🔗 **Live Demo:**
 📹 **Video Walkthrough:**
 
 ## ✨ Features
@@ -21,8 +21,8 @@ Trip Ready generates personalized packing lists based on destination weather, tr
 
 ## 🛠️ Tech Stack
 
-**Frontend:** Next.js 14, React, Redux, TypeScript, Tailwind CSS, Material-UI   
-**Design:** Figma   
+**Frontend:** Next.js 14, React, Redux, TypeScript, Tailwind CSS, Material-UI  
+**Design:** Figma  
 **Backend:** Express, Node.js, Prisma, PostgreSQL  
 **Infrastructure:** Redis, BullMQ, AWS S3, Docker  
 **Testing:** Jest, Playwright  
@@ -30,15 +30,9 @@ Trip Ready generates personalized packing lists based on destination weather, tr
 
 ## 📸 Screenshots
 
-
-
 ## 🚀 Getting Started
 
-
-
 ## 🧪 Testing
-
-
 
 ## 📝 License
 
