@@ -27,8 +27,8 @@ jobs:
         run: npm run lint
 
       - name: Run web tests
-        run: npm test --workspace=apps/web
+        run: npm test --workspace=web
 
       - name: Run API tests
-        run: npm test --workspace=apps/api
+        run: npm test --workspace=api
 
