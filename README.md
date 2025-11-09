@@ -37,3 +37,5 @@ Trip Ready generates personalized packing lists based on destination weather, tr
 ## 📝 License
 
 MIT
+
+[![CI](https://github.com/julia-thea/trip-ready/actions/workflows/ci.yml/badge.svg)](https://github.com/julia-thea/trip-ready/actions/workflows/ci.yml)
