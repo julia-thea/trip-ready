@@ -1,7 +1,11 @@
-export default function MyApp() {
+export default function HomePage() {
   return (
-    <div>
-      <h1>Welcome to Trip Ready</h1>
-    </div>
+    <main>
+      <header className="flex justify-between items-center">
+        <div>Logo</div>
+        <div>Login</div>
+        <div>Sign Up</div>
+      </header>
+    </main>
   );
 }
