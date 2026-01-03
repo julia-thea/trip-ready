@@ -1,9 +1,9 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
-export default {
+const config: Config = {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}'
   ],
   theme: {
     extend: {
@@ -15,21 +15,19 @@ export default {
         steel: '#64748B',
         ivory: '#FAFBFC',
         silver: '#E2E8F0',
-        gold: '#B8860B',
+        gold: '#D97706'
       },
-      fontFamily: {
-        sans: ['Graphik', 'sans-serif'],
-        serif: ['Merriweather', 'serif'],
-        sora: ['var(--font-sora)', 'sans-serif'],
-      },
+      fontFamily: {},
       spacing: {
         '8xl': '96rem',
-        '9xl': '128rem',
+        '9xl': '128rem'
       },
       borderRadius: {
-        '4xl': '2rem',
+        '4xl': '2rem'
       }
     }
   },
-  plugins: [],
-} satisfies Config
+  plugins: []
+};
+
+export default config;
