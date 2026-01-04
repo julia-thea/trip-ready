@@ -1,4 +1,5 @@
 import Button from './components/Button';
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
@@ -7,8 +8,12 @@ export default function HomePage() {
       <header className="mx-auto px-8 py-6 flex justify-between items-center">
         <div className="text-xl font-semibold text-navy">Trip Ready</div>
         <div className="flex gap-3">
-          <Button variant="outline">Login</Button>
-          <Button variant="primary">Sign Up</Button>
+          <Link href="/login">
+            <Button variant="outline">Login</Button>
+          </Link>
+          <Link href="signup">
+            <Button variant="primary">Sign Up</Button>
+          </Link>
         </div>
       </header>
 
@@ -21,7 +26,9 @@ export default function HomePage() {
           Never forget an item again. Create customized packing lists in seconds
           and travel with confidence.
         </p>
-        <Button variant="primary">Create Your List</Button>
+        <Link href="create-list">
+          <Button variant="primary">Create Your List</Button>
+        </Link>
       </section>
 
       {/* Features */}
