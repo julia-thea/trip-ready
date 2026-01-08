@@ -1,12 +1,16 @@
 import Button from './components/Button';
 import Link from 'next/link';
+import { Luggage } from 'lucide-react';
 
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-white">
       {/* Header */}
       <header className="mx-auto px-8 py-6 flex justify-between items-center">
-        <div className="text-xl font-semibold text-navy">Trip Ready</div>
+        <div className="flex items-center gap-2 text-xl font-semibold text-navy">
+          <Luggage className="w-6 h-6" />
+          Trip Ready
+        </div>
         <div className="flex gap-3">
           <Link href="/login">
             <Button variant="outline">Login</Button>
