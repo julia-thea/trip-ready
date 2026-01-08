@@ -4,7 +4,7 @@ import { Luggage } from 'lucide-react';
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Header */}
       <header className="mx-auto px-8 py-6 flex justify-between items-center">
         <div className="flex items-center gap-2 text-xl font-semibold text-navy">
@@ -20,7 +20,6 @@ export default function HomePage() {
           </Link>
         </div>
       </header>
-
       {/* Hero */}
       <section className="mx-auto px-8 pt-24 pb-20 text-center">
         <h1 className="text-7xl font-bold text-navy leading-tight mb-8">
@@ -34,7 +33,6 @@ export default function HomePage() {
           <Button variant="primary">Create Your List</Button>
         </Link>
       </section>
-
       {/* Features */}
       <section className="max-w-6xl mx-auto px-8 pt-10">
         <div className="grid md:grid-cols-3 gap-12">
