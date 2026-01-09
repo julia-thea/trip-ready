@@ -1,17 +1,25 @@
 import Button from './components/Button';
+import Link from 'next/link';
+import { Luggage } from 'lucide-react';
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Header */}
       <header className="mx-auto px-8 py-6 flex justify-between items-center">
-        <div className="text-xl font-semibold text-navy">Trip Ready</div>
+        <div className="flex items-center gap-2 text-xl font-semibold text-navy">
+          <Luggage className="w-6 h-6" />
+          Trip Ready
+        </div>
         <div className="flex gap-3">
-          <Button variant="outline">Login</Button>
-          <Button variant="primary">Sign Up</Button>
+          <Link href="/login">
+            <Button variant="outline">Login</Button>
+          </Link>
+          <Link href="signup">
+            <Button variant="primary">Sign Up</Button>
+          </Link>
         </div>
       </header>
-
       {/* Hero */}
       <section className="mx-auto px-8 pt-24 pb-20 text-center">
         <h1 className="text-7xl font-bold text-navy leading-tight mb-8">
@@ -21,9 +29,10 @@ export default function HomePage() {
           Never forget an item again. Create customized packing lists in seconds
           and travel with confidence.
         </p>
-        <Button variant="primary">Create Your List</Button>
+        <Link href="create-list">
+          <Button variant="primary">Create Your List</Button>
+        </Link>
       </section>
-
       {/* Features */}
       <section className="max-w-6xl mx-auto px-8 pt-10">
         <div className="grid md:grid-cols-3 gap-12">
