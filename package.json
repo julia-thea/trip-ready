@@ -1,7 +1,8 @@
 {
   "name": "trip-ready",
   "version": "1.0.0",
-  "description": "Built because I'm tired of forgetting chargers. Generates smart packing lists from 50+ templates, weather data &amp; your past trips. Next.js · TypeScript · Express · PostgreSQL · Docker",
+  "private": true,
+  "description": "Built because I'm tired of forgetting chargers. Generates smart packing lists from 50+ templates, weather data & your past trips. Next.js · TypeScript · PostgreSQL",
   "homepage": "https://github.com/julia-thea/trip-ready#readme",
   "bugs": {
     "url": "https://github.com/julia-thea/trip-ready/issues"
@@ -13,27 +14,48 @@
   "license": "ISC",
   "author": "",
   "type": "module",
-  "main": "index.js",
-  "workspaces": [
-    "apps/*"
-  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint",
-    "lint:web": "eslint apps/web",
-    "lint:api": "eslint apps/api",
-    "prettify": "npx prettier --write ."
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --fix",
+    "test": "jest",
+    "prettify": "prettier --write ."
+  },
+  "dependencies": {
+    "@auth/prisma-adapter": "^2.11.1",
+    "@prisma/client": "^6.19.2",
+    "@types/bcrypt": "^6.0.0",
+    "bcrypt": "^6.0.0",
+    "lucide-react": "^0.562.0",
+    "next": "16.0.1",
+    "next-auth": "^5.0.0-beta.30",
+    "prisma": "^6.19.2",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "autoprefixer": "^10.4.23",
     "eslint": "^9.39.1",
+    "eslint-config-next": "16.0.1",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^16.5.0",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
     "jiti": "^2.6.1",
+    "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
+    "tailwindcss": "^3.4.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5",
     "typescript-eslint": "^8.46.3"
-  },
-  "dependencies": {
-    "lucide-react": "^0.562.0",
-    "prettier": "^3.6.2"
   }
 }

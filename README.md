@@ -1,96 +1,77 @@
 # Trip Ready
 
-Built because I'm tired of forgetting chargers. Generates smart packing lists from 50+ templates, weather data &amp; your past trips. Next.js · TypeScript · Express · PostgreSQL · Docker
+Built because I'm tired of forgetting chargers. Generates smart packing lists from 50+ templates, weather data & your past trips.
 
-**Smart packing lists for every journey.**
+Trip Ready generates personalized packing lists based on destination weather, trip type, and duration. Never forget essentials again.
 
-Trip Ready generates personalized packing lists based on destination weather, trip type, and duration. Collaborate with travel companions, save preferences, and never forget essentials.
+## Features
 
-🔗 **Live Demo:** [https://trip-ready-api.vercel.app](https://trip-ready-api.vercel.app)
-📹 **Video Walkthrough:**
+- Weather-based packing recommendations
+- Trip type templates (business, adventure, beach, city)
+- Customizable item lists with categories
+- Collaborative packing with shared lists
+- Save and reuse lists across trips
 
-## ✨ Features
+## Tech Stack
 
-- 🌍 Weather-based packing recommendations
-- ✈️ Trip type templates (business, adventure, beach, city)
-- 📝 Customizable item lists with categories
-- 👥 Collaborative packing with shared lists
-- 📊 Trip statistics and packing history
-- 🔐 Secure authentication with OAuth
-- 💳 Premium features via Stripe
+**Frontend & API:** Next.js 16, React 19, TypeScript  
+**Styling:** Tailwind CSS  
+**Database:** PostgreSQL, Prisma (coming soon)  
+**Testing:** Jest, React Testing Library  
+**CI/CD:** GitHub Actions
 
-## 🛠️ Tech Stack
-
-**Frontend:** Next.js 14, React, Redux, TypeScript, Tailwind CSS, Material-UI  
-**Design:** Figma  
-**Backend:** Express, Node.js, Prisma, PostgreSQL  
-**Infrastructure:** Docker, AWS (ECS, RDS, S3, Secrets Manager, CloudWatch), Redis, BullMQ  
-**Testing:** Jest, Playwright  
-**DevOps:** GitHub Actions, Vercel, AWS Elastic Beanstalk/ECS
-
-## 📸 Screenshots
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
 - Node.js 20+
-- npm or pnpm
+- npm
 
 ### Installation
 
-1. Clone the repository:
 ```bash
 git clone https://github.com/julia-thea/trip-ready.git
 cd trip-ready
-```
-
-2. Install dependencies:
-```bash
 npm install
 ```
 
 ### Running Locally
 
-**Frontend (Next.js):**
 ```bash
-cd apps/web
 npm run dev
 ```
+
 Visit [http://localhost:3000](http://localhost:3000)
 
-**Backend (Express API):**
-```bash
-cd apps/api
-npm run dev
+### Available Scripts
+
+| Command         | Description              |
+| --------------- | ------------------------ |
+| `npm run dev`   | Start development server |
+| `npm run build` | Build for production     |
+| `npm run start` | Start production server  |
+| `npm run lint`  | Run ESLint               |
+| `npm test`      | Run tests                |
+
+## Project Structure
+
 ```
-API runs on [http://localhost:8000](http://localhost:8000)
-
-Test the health endpoint:
-```bash
-curl http://localhost:8000/health
-```
-
-## 🧪 Testing
-
-Run tests for the frontend:
-```bash
-cd apps/web
-npm test
-```
-
-Run tests for the API:
-```bash
-cd apps/api
-npm test
-```
-
-Run linter:
-```bash
-npm run lint
+trip-ready/
+├── app/                  # Next.js App Router
+│   ├── api/             # API routes
+│   ├── components/      # Shared components
+│   ├── login/           # Login page
+│   ├── signup/          # Signup page
+│   ├── create-list/     # List builder
+│   ├── layout.tsx       # Root layout
+│   └── page.tsx         # Landing page
+├── public/              # Static assets
+├── package.json
+├── tailwind.config.ts
+└── tsconfig.json
 ```
 
-## 📝 License
+## License
 
 MIT
 

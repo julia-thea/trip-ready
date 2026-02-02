@@ -40,3 +40,5 @@ coverage/
 *.tmp
 .cache/
 
+
+/app/generated/prisma
