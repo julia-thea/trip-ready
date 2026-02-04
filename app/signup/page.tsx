@@ -44,7 +44,7 @@ function SignupForm() {
 
       if (response.ok) {
         // Success - redirect to login or show success
-        window.location.href = '/';
+        window.location.href = '/login';
       } else {
         const data = await response.json();
         setError(data.error || 'Signup failed');
