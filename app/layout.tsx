@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono, Sora } from 'next/font/google';
+import { Sora } from 'next/font/google';
 import './globals.css';
+import Providers from './providers';
 
 const sora = Sora({
   variable: '--font-sora',
@@ -19,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sora.variable} antialiased`}>{children}</body>
+      <body className={`${sora.variable} antialiased`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

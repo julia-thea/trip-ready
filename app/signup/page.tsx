@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 
 function validateEmail(email: string): string {
   if (!email) return 'Email is required';
@@ -18,6 +19,8 @@ function SignupForm() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
   
   async function handleSubmit(event: React.FormEvent) {
@@ -30,6 +33,7 @@ function SignupForm() {
       return;
     }
 
+    setFieldErrors({});
     setLoading(true);
     setError('');
 
@@ -43,18 +47,33 @@ function SignupForm() {
       });
 
       if (response.ok) {
-        // Success - redirect to login or show success
-        window.location.href = '/login';
+        setSuccess(true);
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 1500);
       } else {
         const data = await response.json();
         setError(data.error || 'Signup failed');
       }
-    } catch (err) {
+    } catch {
       setError('Something went wrong');
     } finally {
       setLoading(false);
       }
     }
+
+  if (success) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="text-center">
+          <div className="text-4xl mb-4">✓</div>
+          <h2 className="text-2xl font-bold text-navy mb-2">Account Created</h2>
+          <p className="text-steel">Redirecting to login...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md">
@@ -88,18 +107,27 @@ function SignupForm() {
             <label htmlFor="password" className="block text-sm font-medium text-slate mb-2">
               Password
             </label>
-            <input
-              id="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              type="password"
-              className={`w-full px-4 py-3 rounded-xl border ${
-                fieldErrors.password 
-                  ? 'border-red-500 focus:ring-red-500' 
-                  : 'border-silver focus:border-navy focus:ring-navy'
-              } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all`}
-              placeholder="At least 8 characters"
-            />
+            <div className="relative">
+              <input
+                id="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                type={showPassword ? 'text' : 'password'}
+                className={`w-full px-4 py-3 pr-12 rounded-xl border ${
+                  fieldErrors.password 
+                    ? 'border-red-500 focus:ring-red-500' 
+                    : 'border-silver focus:border-navy focus:ring-navy'
+                } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all`}
+                placeholder="At least 8 characters"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-steel hover:text-navy transition-colors"
+              >
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
             {fieldErrors.password && (
               <p className="mt-2 text-sm text-red-500">{fieldErrors.password}</p>
             )}

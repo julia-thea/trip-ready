@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
+import { Eye, EyeOff } from 'lucide-react';
 
 function validateEmail(email: string): string {
   if (!email) return 'Email is required';
@@ -18,6 +19,7 @@ function LoginForm() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
   
   async function handleSubmit(event: React.FormEvent) {
@@ -30,6 +32,7 @@ function LoginForm() {
       return;
     }
 
+    setFieldErrors({});
     setLoading(true);
     setError('');
 
@@ -43,7 +46,7 @@ function LoginForm() {
       setError('Invalid email or password');
       setLoading(false);
     } else {
-      window.location.href = '/';
+      window.location.href = '/dashboard';
     }
   }
   return (
@@ -79,18 +82,27 @@ function LoginForm() {
             <label htmlFor="password" className="block text-sm font-medium text-slate mb-2">
               Password
             </label>
-            <input
-              id="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              type="password"
-              className={`w-full px-4 py-3 rounded-xl border ${
-                fieldErrors.password 
-                  ? 'border-red-500 focus:ring-red-500' 
-                  : 'border-silver focus:border-navy focus:ring-navy'
-              } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all`}
-              placeholder="Your password"
-            />
+            <div className="relative">
+              <input
+                id="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                type={showPassword ? 'text' : 'password'}
+                className={`w-full px-4 py-3 pr-12 rounded-xl border ${
+                  fieldErrors.password 
+                    ? 'border-red-500 focus:ring-red-500' 
+                    : 'border-silver focus:border-navy focus:ring-navy'
+                } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all`}
+                placeholder="Your password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-steel hover:text-navy transition-colors"
+              >
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
             {fieldErrors.password && (
               <p className="mt-2 text-sm text-red-500">{fieldErrors.password}</p>
             )}
