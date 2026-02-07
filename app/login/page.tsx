@@ -43,7 +43,7 @@ function LoginForm() {
       setError('Invalid email or password');
       setLoading(false);
     } else {
-      window.location.href = '/';
+      window.location.href = '/dashboard';
     }
   }
   return (
