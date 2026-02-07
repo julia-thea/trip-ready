@@ -21,12 +21,9 @@ export default function Navbar() {
         {status === 'authenticated' && (
           <>
             <span className="text-sm text-steel">{session.user?.email}</span>
-            <button
-              onClick={() => signOut({ callbackUrl: '/' })}
-              className="px-7 py-2.5 bg-ivory text-navy text-sm font-medium rounded-xl border border-navy/10 hover:border-navy/40 hover:bg-navy/5 transition-all duration-200"
-            >
+            <Button variant="outline" onClick={() => signOut({ callbackUrl: '/' })}>
               Log Out
-            </button>
+            </Button>
           </>
         )}
         {status === 'unauthenticated' && (
@@ -43,4 +40,3 @@ export default function Navbar() {
     </header>
   )
 }
-
