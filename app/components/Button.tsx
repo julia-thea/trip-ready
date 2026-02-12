@@ -21,12 +21,7 @@ export default function Button({
   };
 
   return (
-    <button
-      className={styles[variant]}
-      onClick={onClick}
-      disabled={disabled}
-      type={type}
-    >
+    <button className={styles[variant]} onClick={onClick} disabled={disabled} type={type}>
       {children}
     </button>
   );
