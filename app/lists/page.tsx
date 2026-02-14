@@ -1,5 +1,6 @@
 import { PrismaClient, List, Item } from '../../app/generated/prisma';
 const prisma = new PrismaClient();
+import Link from 'next/link';
 
 export default async function ListsPage() {
   // Query lists with their items included
@@ -11,9 +12,16 @@ export default async function ListsPage() {
 
   return (
     <div>
+      <h1 className="text-3xl mb-4">
+        Lists
+      </h1>
       {lists.map((list) => (
-        <div key={list.id}>
-          <h2>{list.title}</h2>
+        <div >
+          <h2>
+            <Link key={list.id} href={`/lists/${list.id}`}>
+              {list.title}
+            </Link>
+          </h2>
           <ul>
             {list.items.map((item) => (
               <li key={item.id}>
