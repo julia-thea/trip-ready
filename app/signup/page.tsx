@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
+import Button from '../components/Button';
 
 function validateEmail(email: string): string {
   if (!email) return 'Email is required';
@@ -127,13 +128,9 @@ function SignupForm() {
             )}
           </div>
 
-          <button
-            type='submit'
-            disabled={loading}
-            className='w-full px-7 py-3 bg-navy text-ivory text-sm font-semibold rounded-xl hover:bg-slate hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none'
-          >
+          <Button type='submit' disabled={loading} fullWidth>
             {loading ? 'Creating Account...' : 'Sign Up'}
-          </button>
+          </Button>
 
           {error && <p className='text-center text-sm text-red-500'>{error}</p>}
 

@@ -2,6 +2,7 @@
 import { useState, useActionState } from 'react';
 import Navbar from '../components/Navbar';
 import { createList } from '../actions/lists';
+import Button from '../components/Button';
 
 function CreateListPage() {
   const [title, setTitle] = useState('');
@@ -31,13 +32,9 @@ function CreateListPage() {
               />
               {state.error && <p className='mt-2 text-sm text-red-500'>{state.error}</p>}
             </div>
-            <button
-              type='submit'
-              className='w-full px-7 py-3 bg-navy text-ivory text-sm font-semibold rounded-xl hover:bg-slate hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none'
-              disabled={isPending}
-            >
+            <Button type='submit' disabled={isPending} fullWidth>
               {isPending ? 'Creating...' : 'Create List'}
-            </button>
+            </Button>
           </form>
         </div>
       </div>

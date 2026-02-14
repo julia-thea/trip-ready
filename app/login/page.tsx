@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { Eye, EyeOff } from 'lucide-react';
+import Button from '../components/Button';
 
 function validateEmail(email: string): string {
   if (!email) return 'Email is required';
@@ -64,11 +65,10 @@ function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               type='email'
-              className={`w-full px-4 py-3 rounded-xl border ${
-                fieldErrors.email
-                  ? 'border-red-500 focus:ring-red-500'
-                  : 'border-silver focus:border-navy focus:ring-navy'
-              } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all`}
+              className={`w-full px-4 py-3 rounded-xl border ${fieldErrors.email
+                ? 'border-red-500 focus:ring-red-500'
+                : 'border-silver focus:border-navy focus:ring-navy'
+                } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all`}
               placeholder='you@example.com'
             />
             {fieldErrors.email && <p className='mt-2 text-sm text-red-500'>{fieldErrors.email}</p>}
@@ -84,11 +84,10 @@ function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 type={showPassword ? 'text' : 'password'}
-                className={`w-full px-4 py-3 pr-12 rounded-xl border ${
-                  fieldErrors.password
-                    ? 'border-red-500 focus:ring-red-500'
-                    : 'border-silver focus:border-navy focus:ring-navy'
-                } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all`}
+                className={`w-full px-4 py-3 pr-12 rounded-xl border ${fieldErrors.password
+                  ? 'border-red-500 focus:ring-red-500'
+                  : 'border-silver focus:border-navy focus:ring-navy'
+                  } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all`}
                 placeholder='Your password'
               />
               <button
@@ -104,13 +103,9 @@ function LoginForm() {
             )}
           </div>
 
-          <button
-            type='submit'
-            disabled={loading}
-            className='w-full px-7 py-3 bg-navy text-ivory text-sm font-semibold rounded-xl hover:bg-slate hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none'
-          >
+          <Button type='submit' disabled={loading} fullWidth>
             {loading ? 'Logging in...' : 'Log In'}
-          </button>
+          </Button>
 
           {error && <p className='text-center text-sm text-red-500'>{error}</p>}
 

@@ -19,6 +19,9 @@ export default function Navbar() {
         {status === 'authenticated' && (
           <>
             <span className='text-sm text-steel'>{session.user?.email}</span>
+            <Link href='/dashboard'>
+              <Button variant='secondary'>Dashboard</Button>
+            </Link>
             <Button variant='outline' onClick={() => signOut({ callbackUrl: '/' })}>
               Log Out
             </Button>
