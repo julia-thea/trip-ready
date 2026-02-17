@@ -11,7 +11,10 @@ async function ListDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const list = await prisma.list.findUnique({
         where: {
             id: id
-        }
+        },
+        include: {
+            items: true,
+        },
     })
     if (!list) {
         return <div>List not found</div>;

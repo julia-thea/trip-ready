@@ -83,8 +83,8 @@ function SignupForm() {
         <form onSubmit={handleSubmit} className='space-y-6'>
           <div>
             <label htmlFor='email' className='block text-sm font-medium text-slate mb-2'>
-              Email
-            </label>
+        Email
+      </label>
             <input
               id='email'
               value={email}
@@ -101,8 +101,8 @@ function SignupForm() {
 
           <div>
             <label htmlFor='password' className='block text-sm font-medium text-slate mb-2'>
-              Password
-            </label>
+        Password
+      </label>
             <div className='relative'>
               <input
                 id='password'
@@ -140,7 +140,7 @@ function SignupForm() {
               Log in
             </a>
           </p>
-        </form>
+    </form>
       </div>
     </div>
   );
