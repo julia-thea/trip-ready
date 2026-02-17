@@ -1,9 +1,7 @@
-import { PrismaClient } from '../../../app/generated/prisma';
-const prisma = new PrismaClient();
-import Link from 'next/link';
+import { prisma } from '@/lib/prisma';
 import React from 'react';
-import Button from '../../components/Button';
 import Navbar from '@/app/components/Navbar';
+import AddItemForm from '@/app/components/AddItemForm';
 
 
 async function ListDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -25,8 +23,26 @@ async function ListDetailPage({ params }: { params: Promise<{ id: string }> }) {
             <Navbar />
             <main className='max-w-4xl mx-auto px-8 pt-12'>
                 <h1 className='text-3xl font-bold text-navy mb-6'>{list.title}</h1>
-                <div className='bg-white border border-silver rounded-xl p-6'>
-                    <p className='text-sm text-steel'>No items yet</p>
+
+                <div className='grid grid-cols-2 gap-8'>
+                    <div>
+                        {list.items.length === 0 ? (
+                            <div className='bg-white border border-silver rounded-xl p-6'>
+                                <p className='text-sm text-steel'>No items yet</p>
+                            </div>
+                        ) : (
+                            <ul>
+                                {list.items.map((item) => (
+                                    <li key={item.id}>
+                                        <div className='bg-white border border-silver rounded-xl p-6 my-2'>{item.name}</div>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                    <div>
+                        <AddItemForm listId={list.id} />
+                    </div>
                 </div>
             </main>
         </div>

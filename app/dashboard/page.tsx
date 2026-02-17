@@ -26,13 +26,6 @@ export default async function Dashboard() {
             <h2 className='text-lg font-semibold text-navy mb-2'>My Lists</h2>
             <p className='text-steel text-sm'>View and manage your packing lists</p>
           </a>
-          <a
-            href='/create-list'
-            className='p-6 bg-white rounded-xl border border-silver hover:border-navy/30 hover:shadow-md transition-all'
-          >
-            <h2 className='text-lg font-semibold text-navy mb-2'>Create New List</h2>
-            <p className='text-steel text-sm'>Start a new packing list for your trip</p>
-          </a>
         </div>
       </main>
     </div>

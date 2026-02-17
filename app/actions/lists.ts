@@ -1,6 +1,5 @@
 'use server'
-import { PrismaClient } from '../../app/generated/prisma';
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 
 
