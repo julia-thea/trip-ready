@@ -13,6 +13,14 @@ function UpdateItemRow({ item, listId }: { item: { id: string, name: string, qua
         });
     };
 
+    function handleDelete() {
+        if (confirm(`Are you sure you want to delete "${item.name}"?`)) {
+            startTransition(async () => {
+                await deleteItem(item.id, listId);
+            });
+        }
+    };
+
     return (
         <li key={item.id} className='flex items-center justify-between text-lg'>
             <span className={'text-slate'}>
@@ -24,7 +32,7 @@ function UpdateItemRow({ item, listId }: { item: { id: string, name: string, qua
                     {optimisticPacked ? 'Packed' : 'Not packed'}
                     <input type='checkbox' checked={optimisticPacked} onChange={handleToggle} className='ml-2' />
                 </span>
-                <button className="text-xs text-red-500 hover:text-red-700" onClick={() => deleteItem(item.id, listId)}>
+                <button className="text-xs text-red-500 hover:text-red-700" onClick={handleDelete}>
                     Delete
                 </button>
             </span>
