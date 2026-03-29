@@ -1,3 +1,76 @@
+/**
+ * Global CSS File
+ * 
+ * This file contains global styles for the entire application.
+ * It's imported in app/layout.tsx and applies to all pages.
+ * 
+ * Tailwind CSS Directives:
+ * These directives tell Tailwind where to inject its generated CSS.
+ * Tailwind scans your files (configured in tailwind.config.ts) and
+ * generates only the CSS classes you actually use (tree-shaking).
+ * 
+ * Processing Order:
+ * 1. @tailwind base - Tailwind's base styles (normalize, defaults)
+ * 2. @tailwind components - Component classes (if using @apply)
+ * 3. @tailwind utilities - Utility classes (the main Tailwind classes)
+ * 
+ * What Gets Generated:
+ * - Base: CSS reset, default styles for HTML elements
+ * - Components: Custom component classes (if defined)
+ * - Utilities: All utility classes (flex, grid, text-center, etc.)
+ * 
+ * File Location: app/globals.css
+ * - Imported in app/layout.tsx
+ * - Applies globally to all pages
+ * - Can add custom CSS here if needed (below the directives)
+ */
+
+/**
+ * @tailwind base
+ * 
+ * Injects Tailwind's base styles (CSS reset and defaults).
+ * 
+ * What it includes:
+ * - Normalize.css (cross-browser consistency)
+ * - Default styles for HTML elements (headings, paragraphs, etc.)
+ * - CSS custom properties (CSS variables)
+ * 
+ * This runs first to establish a consistent base across browsers.
+ */
 @tailwind base;
+
+/**
+ * @tailwind components
+ * 
+ * Injects Tailwind's component classes.
+ * 
+ * What it includes:
+ * - Custom component classes defined with @apply directive
+ * - Pre-built component classes (if using Tailwind UI)
+ * 
+ * Currently empty in this project, but you can add custom component classes
+ * using the @apply directive, for example:
+ * .btn { @apply px-4 py-2 bg-blue-500 text-white rounded; }
+ * 
+ * This runs after base but before utilities.
+ */
 @tailwind components;
+
+/**
+ * @tailwind utilities
+ * 
+ * Injects Tailwind's utility classes (the main feature).
+ * 
+ * What it includes:
+ * - All utility classes you use in your components
+ * - Examples: flex, grid, text-center, bg-blue-500, p-4, etc.
+ * - Responsive variants: md:flex, lg:grid-cols-3
+ * - State variants: hover:bg-blue-600, focus:ring-2
+ * 
+ * This runs last, so utility classes can override base/component styles.
+ * 
+ * Tree-shaking:
+ * - Only classes you actually use are included in the final CSS
+ * - Keeps bundle size small even with thousands of available utilities
+ */
 @tailwind utilities;

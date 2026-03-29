@@ -1,13 +1,81 @@
+/**
+ * Prisma Schema File
+ * 
+ * This file defines your database schema using Prisma's declarative syntax.
+ * Prisma generates a type-safe client based on this schema.
+ * 
+ * Schema Structure:
+ * - Generator: Configures how Prisma Client is generated
+ * - Datasource: Database connection configuration
+ * - Models: Database tables and their relationships
+ * 
+ * Models Overview:
+ * - Auth.js Models: User, Account, Session, VerificationToken, Authenticator
+ *   (Required for Auth.js authentication)
+ * - App Models: List, Item
+ *   (Your application's business logic)
+ * 
+ * Relationships:
+ * - User → Account (one-to-many): User can have multiple OAuth accounts
+ * - User → Session (one-to-many): User can have multiple sessions
+ * - User → Authenticator (one-to-many): User can have multiple WebAuthn devices
+ * - List → Item (one-to-many): List contains multiple items
+ * - User → List (one-to-many, optional): User can own multiple lists
+ */
+
+/**
+ * Generator Configuration
+ * 
+ * Tells Prisma how to generate the Prisma Client.
+ * 
+ * provider: "prisma-client-js" - Generates JavaScript/TypeScript client
+ * output: Custom output path for generated client
+ *   - Default: node_modules/.prisma/client
+ *   - Custom: ../app/generated/prisma (keeps generated code in project)
+ */
 generator client {
   provider = "prisma-client-js"
   output   = "../app/generated/prisma"
 }
 
+/**
+ * Datasource Configuration
+ * 
+ * Defines the database connection.
+ * 
+ * provider: "postgresql" - Database type (PostgreSQL)
+ * url: Connection string from environment variable
+ *   - Format: postgresql://user:password@host:port/database
+ *   - Stored in .env file as DATABASE_URL
+ */
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+/**
+ * User Model
+ * 
+ * Represents a user account in the system.
+ * Required by Auth.js for authentication.
+ * 
+ * Fields:
+ * - id: Unique identifier (CUID - Collision-resistant Unique ID)
+ * - name: User's display name (optional)
+ * - email: User's email address (unique, required for login)
+ * - emailVerified: Timestamp when email was verified (optional)
+ * - image: Profile picture URL (optional)
+ * - password: Hashed password (optional - only for email/password auth, not OAuth)
+ * 
+ * Relations:
+ * - accounts: OAuth accounts linked to this user (GitHub, Google, etc.)
+ * - sessions: Active sessions for this user
+ * - authenticators: WebAuthn devices for passwordless login
+ * 
+ * Timestamps:
+ * - createdAt: When user account was created
+ * - updatedAt: When user account was last updated (auto-updated)
+ */
 model User {
   id            String          @id @default(cuid())
   name          String?
@@ -22,6 +90,29 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+/**
+ * Account Model
+ * 
+ * Stores OAuth account information (GitHub, Google, etc.).
+ * Required by Auth.js when using OAuth providers.
+ * 
+ * This model links external OAuth accounts to User accounts.
+ * One user can have multiple accounts (e.g., GitHub + Google).
+ * 
+ * Fields:
+ * - userId: Foreign key to User
+ * - type: Account type (e.g., "oauth", "oidc")
+ * - provider: OAuth provider name (e.g., "github", "google")
+ * - providerAccountId: User's ID in the OAuth provider's system
+ * - refresh_token, access_token: OAuth tokens (optional, encrypted in production)
+ * - expires_at: Token expiration timestamp
+ * 
+ * Composite Primary Key:
+ * - @@id([provider, providerAccountId]): Unique combination of provider + provider ID
+ * 
+ * Cascade Delete:
+ * - onDelete: Cascade - If user is deleted, delete all their accounts
+ */
 model Account {
   userId            String
   type              String
@@ -43,6 +134,22 @@ model Account {
   @@id([provider, providerAccountId])
 }
  
+/**
+ * Session Model
+ * 
+ * Stores database sessions (used when session strategy is "database").
+ * 
+ * Note: We use JWT strategy (sessions in tokens, not database),
+ * but this model is still required by Auth.js Prisma adapter.
+ * 
+ * Fields:
+ * - sessionToken: Unique session identifier
+ * - userId: Foreign key to User
+ * - expires: When session expires
+ * 
+ * Cascade Delete:
+ * - onDelete: Cascade - If user is deleted, delete all their sessions
+ */
 model Session {
   sessionToken String   @unique
   userId       String
@@ -53,6 +160,20 @@ model Session {
   updatedAt DateTime @updatedAt
 }
  
+/**
+ * VerificationToken Model
+ * 
+ * Stores email verification tokens and password reset tokens.
+ * Required by Auth.js for email verification flows.
+ * 
+ * Fields:
+ * - identifier: Email address or user identifier
+ * - token: Verification token (hashed)
+ * - expires: When token expires
+ * 
+ * Composite Primary Key:
+ * - @@id([identifier, token]): Unique combination of identifier + token
+ */
 model VerificationToken {
   identifier String
   token      String
@@ -61,7 +182,27 @@ model VerificationToken {
   @@id([identifier, token])
 }
  
-// Optional for WebAuthn support
+/**
+ * Authenticator Model (Optional - WebAuthn Support)
+ * 
+ * Stores WebAuthn (passwordless) authentication credentials.
+ * Only needed if you want to support passwordless login (e.g., biometrics, security keys).
+ * 
+ * Fields:
+ * - credentialID: Unique credential identifier
+ * - userId: Foreign key to User
+ * - credentialPublicKey: Public key for verification
+ * - counter: Security counter (prevents replay attacks)
+ * - credentialDeviceType: Device type (e.g., "singleDevice", "multiDevice")
+ * - credentialBackedUp: Whether credential is backed up
+ * - transports: Supported transport methods (optional)
+ * 
+ * Composite Primary Key:
+ * - @@id([userId, credentialID]): Unique per user + credential
+ * 
+ * Cascade Delete:
+ * - onDelete: Cascade - If user is deleted, delete all their authenticators
+ */
 model Authenticator {
   credentialID         String  @unique
   userId               String
@@ -77,6 +218,25 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
+/**
+ * List Model
+ * 
+ * Represents a packing list (your app's main entity).
+ * 
+ * Fields:
+ * - id: Unique identifier (CUID)
+ * - title: List name/title (e.g., "Weekend Trip", "Beach Vacation")
+ * - userId: Foreign key to User (optional - allows unauthenticated lists)
+ * - items: Related items in this list (one-to-many relationship)
+ * 
+ * Timestamps:
+ * - createdAt: When list was created
+ * - updatedAt: When list was last updated (auto-updated)
+ * 
+ * Relationships:
+ * - items: One list has many items (Item.listId → List.id)
+ * - userId: Optional - list can belong to a user or be anonymous
+ */
 model List {
   id        String   @id @default(cuid())
   title     String
@@ -86,6 +246,29 @@ model List {
   items      Item[]
 }
 
+/**
+ * Item Model
+ * 
+ * Represents an item in a packing list.
+ * 
+ * Fields:
+ * - id: Unique identifier (CUID)
+ * - name: Item name (e.g., "Phone charger", "Toothbrush")
+ * - quantity: How many of this item (default: 0)
+ * - packed: Whether item is packed (default: false)
+ * - listId: Foreign key to List (required - item must belong to a list)
+ * 
+ * Timestamps:
+ * - createdAt: When item was created
+ * - updatedAt: When item was last updated (auto-updated)
+ * 
+ * Relationships:
+ * - list: Item belongs to one list (Item.listId → List.id)
+ * 
+ * Cascade Delete:
+ * - onDelete: Cascade - If list is deleted, delete all its items
+ *   This prevents orphaned items in the database
+ */
 model Item {
   id        String   @id @default(cuid())
   name      String

@@ -1,3 +1,24 @@
+/**
+ * Button Component
+ * 
+ * Reusable button component with multiple variants and styling options.
+ * Used throughout the application for consistent button styling.
+ * 
+ * Component Type: Client Component (implicit - uses event handlers)
+ * - No 'use client' directive needed if only used in Client Components
+ * - Can be used in both Server and Client Components
+ * 
+ * Variants:
+ * - primary: Dark navy background (main CTA buttons)
+ * - secondary: Light sky background (secondary actions)
+ * - outline: Transparent with border (tertiary actions)
+ * 
+ * Features:
+ * - Hover effects (shadow, translate)
+ * - Disabled state styling
+ * - Full-width option
+ * - Type support (button, submit, reset)
+ */
 export default function Button({
   children,
   variant = 'primary',
@@ -13,9 +34,25 @@ export default function Button({
   type?: 'button' | 'submit' | 'reset';
   fullWidth?: boolean;
 }) {
+  /**
+   * Base Styles
+   * 
+   * Shared styles applied to all button variants:
+   * - Padding, font size, border radius
+   * - Transitions for smooth animations
+   * - Disabled state styles (opacity, cursor, hover prevention)
+   */
   const base =
     'px-7 py-3 text-sm font-semibold rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none';
 
+  /**
+   * Variant Styles
+   * 
+   * Different styles for each button variant:
+   * - primary: Navy background with hover effects
+   * - secondary: Sky background with border
+   * - outline: Transparent with border
+   */
   const styles = {
     primary:
       'bg-navy text-ivory hover:bg-slate hover:shadow-lg hover:-translate-y-0.5',
