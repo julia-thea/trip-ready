@@ -4,6 +4,7 @@ import AddItemForm from '@/app/components/AddItemForm';
 import EditableListTitle from '@/app/components/EditableListTitle';
 import ItemListWithSearch from '@/app/components/ItemListWithSearch';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 async function ListDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -18,7 +19,7 @@ async function ListDetailPage({ params }: { params: Promise<{ id: string }> }) {
     },
   });
   if (!list) {
-    return <div>List not found</div>;
+    notFound();
   }
 
   const totalItems = list.items.length;
