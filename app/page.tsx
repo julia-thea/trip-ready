@@ -58,7 +58,7 @@ export default function HomePage() {
 
         {/* Call-to-Action Button */}
         {/* Links to create-list page to start user journey */}
-        <Link href='/create-list'>
+        <Link href='/lists'>
           <Button variant='primary'>Create Your List</Button>
         </Link>
       </section>

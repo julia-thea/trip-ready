@@ -44,12 +44,18 @@ Create a `.env` file in the project root:
 ```env
 DATABASE_URL="postgresql://your_user@localhost:5432/tripready"
 AUTH_SECRET="generated-by-npx-auth-secret"
+AUTH_URL="http://localhost:3000"
+RESEND_API_KEY="re_xxxxxxxx"
+EMAIL_FROM="Trip Ready <onboarding@resend.dev>"
 ```
 
 | Variable | Description |
 |---|---|
 | `DATABASE_URL` | PostgreSQL connection string |
 | `AUTH_SECRET` | Auth.js session encryption key. Generate with `npx auth secret` |
+| `AUTH_URL` | App base URL for absolute links (password reset emails). Falls back to `NEXT_PUBLIC_APP_URL` or `http://localhost:3000` |
+| `RESEND_API_KEY` | [Resend](https://resend.com) API key for password-reset emails. If unset locally, the reset URL is logged to the server console instead |
+| `EMAIL_FROM` | From address for Resend. Use `onboarding@resend.dev` while testing; verify your domain for production |
 
 ### Database Setup
 

@@ -243,6 +243,11 @@ function LoginForm() {
             {fieldErrors.password && (
               <p className='mt-2 text-sm text-red-500'>{fieldErrors.password}</p>
             )}
+            <p className='mt-2 text-right'>
+              <a href='/forgot-password' className='text-sm text-navy font-medium hover:underline'>
+                Forgot password?
+              </a>
+            </p>
           </div>
 
           {/* Submit Button */}

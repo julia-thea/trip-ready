@@ -2,6 +2,8 @@ import { prisma } from '@/lib/prisma';
 import Navbar from '@/app/components/Navbar';
 import AddItemForm from '@/app/components/AddItemForm';
 import UpdateItemRow from '../../components/UpdateItemRow';
+import EditableListTitle from '@/app/components/EditableListTitle';
+import Link from 'next/link';
 
 
 async function ListDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -23,13 +25,18 @@ async function ListDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const totalItems = list.items.length;
     const packedItems = list.items.filter(item => item.packed).length;
     const progressPercent = totalItems > 0 ? Math.round((packedItems / totalItems) * 100) : 0;
-
+    console.log("I am lisssst: ", list.id);
 
     return (
         <div className='min-h-screen bg-gradient-to-b from-slate-50 to-white'>
             <Navbar />
             <main className='max-w-4xl mx-auto px-8 pt-12'>
-                <h1 className='text-3xl font-bold text-navy mb-6'>{list.title}</h1>
+                <div className='mb-4'>
+                    <Link href={'/lists'}>
+                        Back to Lists
+                    </Link>
+                </div>
+                <EditableListTitle />
                 <div className='mb-6'>
                     <div className='flex justify-between text-sm text-steel mb-1'>
                         <span>Packing progress</span>
@@ -57,7 +64,7 @@ async function ListDetailPage({ params }: { params: Promise<{ id: string }> }) {
                     </div>
                 </div>
             </main>
-        </div>
+        </div >
     )
 }
 
