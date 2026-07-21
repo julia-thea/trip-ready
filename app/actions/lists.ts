@@ -30,21 +30,23 @@ export async function createList(previousState: { error: string }, formData: For
 }
 
 export async function editListTitle(listId: string, title: string) {
-  if (!title || title.trim() === '') {
+  const trimmed = title.trim();
+
+  if (!trimmed) {
     return { error: 'Title is required' };
   }
 
   try {
     await prisma.list.update({
       where: { id: listId },
-      data: { title: title },
+      data: { title: trimmed },
     });
 
-    // Revalidate to refresh the UI with updated status
     revalidatePath('/lists/' + listId);
-    revalidatePath('/lists/');
-  } catch (error) {
-    throw error;
+    revalidatePath('/lists');
+    return { error: '' };
+  } catch {
+    return { error: 'Could not update title. Please try again.' };
   }
 }
 

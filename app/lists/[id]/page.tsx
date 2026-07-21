@@ -25,18 +25,17 @@ async function ListDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const totalItems = list.items.length;
     const packedItems = list.items.filter(item => item.packed).length;
     const progressPercent = totalItems > 0 ? Math.round((packedItems / totalItems) * 100) : 0;
-    console.log("I am lisssst: ", list.id);
 
     return (
         <div className='min-h-screen bg-gradient-to-b from-slate-50 to-white'>
             <Navbar />
             <main className='max-w-4xl mx-auto px-8 pt-12'>
                 <div className='mb-4'>
-                    <Link href={'/lists'}>
+                    <Link href='/lists' className='text-sm text-steel hover:text-navy'>
                         Back to Lists
                     </Link>
                 </div>
-                <EditableListTitle />
+                <EditableListTitle listId={list.id} title={list.title} />
                 <div className='mb-6'>
                     <div className='flex justify-between text-sm text-steel mb-1'>
                         <span>Packing progress</span>
@@ -52,7 +51,6 @@ async function ListDetailPage({ params }: { params: Promise<{ id: string }> }) {
                             <ul className='space-y-2'>
                                 {list.items.map((item) => (
                                     <UpdateItemRow key={item.id} item={item} listId={list.id} />
-
                                 ))}
                             </ul>
                         ) : (
@@ -64,7 +62,7 @@ async function ListDetailPage({ params }: { params: Promise<{ id: string }> }) {
                     </div>
                 </div>
             </main>
-        </div >
+        </div>
     )
 }
 
