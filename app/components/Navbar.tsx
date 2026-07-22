@@ -49,56 +49,42 @@ export default function Navbar() {
   const { data: session, status } = useSession();
 
   return (
-    <header className='mx-auto px-8 py-6 flex justify-between items-center'>
-      {/* Logo/Brand Link */}
-      <Link href='/' className='flex items-center gap-2 text-xl font-semibold text-navy'>
-        <Luggage className='w-6 h-6' />
-        Trip Ready
-      </Link>
+    <header className='sticky top-0 z-40 border-b border-silver/80 bg-ivory/90 backdrop-blur-md'>
+      <div className='mx-auto flex max-w-6xl items-center justify-between px-8 py-4'>
+        <Link href='/' className='flex items-center gap-2 text-xl font-semibold text-navy'>
+          <Luggage className='w-6 h-6' />
+          Trip Ready
+        </Link>
 
-      {/* Right Side: Authentication-Dependent Content */}
-      <div className='flex gap-3 items-center'>
-        {/* Loading State: Checking Session */}
-        {status === 'loading' && <span className='text-sm text-steel'>Loading...</span>}
+        <div className='flex gap-3 items-center'>
+          {status === 'loading' && <span className='text-sm text-steel'>Loading...</span>}
 
-        {/* Authenticated State: User is logged in */}
-        {status === 'authenticated' && (
-          <>
-            {/* User Email */}
-            <span className='text-sm text-steel'>{session.user?.email}</span>
+          {status === 'authenticated' && (
+            <>
+              <span className='hidden text-sm text-steel sm:inline'>{session.user?.email}</span>
 
-            {/* Dashboard Link */}
-            <Link href='/dashboard'>
-              <Button variant='secondary'>Dashboard</Button>
-            </Link>
+              <Link href='/dashboard'>
+                <Button variant='secondary'>Dashboard</Button>
+              </Link>
 
-            {/* Log Out Button */}
-            {/* 
-              signOut() from next-auth/react:
-              - Clears session cookie
-              - Redirects to callbackUrl after sign out
-              - callbackUrl: '/' means redirect to home page
-            */}
-            <Button variant='outline' onClick={() => signOut({ callbackUrl: '/' })}>
-              Log Out
-            </Button>
-          </>
-        )}
+              <Button variant='outline' onClick={() => signOut({ callbackUrl: '/' })}>
+                Log Out
+              </Button>
+            </>
+          )}
 
-        {/* Unauthenticated State: User is not logged in */}
-        {status === 'unauthenticated' && (
-          <>
-            {/* Login Link */}
-            <Link href='/login'>
-              <Button variant='outline'>Login</Button>
-            </Link>
+          {status === 'unauthenticated' && (
+            <>
+              <Link href='/login'>
+                <Button variant='outline'>Login</Button>
+              </Link>
 
-            {/* Sign Up Link */}
-            <Link href='/signup'>
-              <Button variant='primary'>Sign Up</Button>
-            </Link>
-          </>
-        )}
+              <Link href='/signup'>
+                <Button variant='primary'>Sign Up</Button>
+              </Link>
+            </>
+          )}
+        </div>
       </div>
     </header>
   );

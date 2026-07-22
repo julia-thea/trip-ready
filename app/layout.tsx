@@ -65,7 +65,7 @@ const sora = Sora({
  */
 export const metadata: Metadata = {
   title: 'Trip Ready',
-  description: 'Smart Packing Lists for Every Trip',
+  description: 'Never forget a charger again. Smart packing lists for every trip.',
 };
 
 /**
@@ -95,7 +95,10 @@ export default function RootLayout({
         - antialiased: Tailwind class for smooth font rendering
         - Providers: Wraps app with client-side providers (SessionProvider)
       */}
-      <body className={`${sora.variable} antialiased`}>
+      <body
+        className={`${sora.variable} antialiased`}
+        style={{ fontFamily: 'var(--font-sora), system-ui, sans-serif' }}
+      >
         {/* 
           Providers Component:
           - Client Component wrapper for SessionProvider

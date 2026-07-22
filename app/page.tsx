@@ -1,105 +1,170 @@
-/**
- * Home Page (Landing Page)
- * 
- * This is the root page of the application (app/page.tsx).
- * It serves as the landing page that users see when they visit the site.
- * 
- * Component Type: Server Component (default in Next.js App Router)
- * - No 'use client' directive = Server Component
- * - Renders on server, sent as HTML to client
- * - Can use Server Components and Client Components as children
- * 
- * Page Structure:
- * 1. Navbar - Global navigation (Client Component)
- * 2. Hero Section - Main headline and CTA button
- * 3. Features Section - Three feature cards highlighting app benefits
- * 
- * Styling:
- * - Uses Tailwind CSS utility classes
- * - Custom colors from tailwind.config.ts (navy, slate, etc.)
- * - Responsive design with md: breakpoint
- * - Gradient background for visual appeal
- */
 import Link from 'next/link';
+import {
+  ListChecks,
+  Luggage,
+  Map,
+  Sparkles,
+} from 'lucide-react';
 import Button from './components/Button';
 import Navbar from './components/Navbar';
+import PackingListCard from './components/PackingListCard';
+import ScrollPackDemo from './components/ScrollPackDemo';
 
-/**
- * HomePage Component
- * 
- * Renders the landing page with hero section and features.
- * 
- * @returns JSX for the home page
- */
+const HERO_LIST_ITEMS = [
+  { name: 'Passport', packed: true },
+  { name: 'Phone charger', packed: true },
+  { name: 'Rain jacket', packed: false },
+  { name: 'Hiking boots', packed: false },
+  { name: 'Travel adapter', packed: true },
+  { name: 'Toiletry kit', packed: false },
+];
+
 export default function HomePage() {
   return (
-    <main className='min-h-screen bg-gradient-to-b from-slate-50 to-white'>
-      {/* Global Navigation Bar */}
-      {/* Navbar is a Client Component (uses useSession hook) */}
+    <div className='min-h-screen bg-ivory text-slate'>
       <Navbar />
 
-      {/* Hero Section: Main Value Proposition */}
-      {/* 
-        Purpose: First thing users see - communicates app's value
-        Layout: Centered, large heading, descriptive text, CTA button
-        Styling: Large text (text-7xl), navy color, gradient background
-      */}
-      <section className='mx-auto px-8 pt-24 pb-20 text-center'>
-        {/* Main Headline */}
-        <h1 className='text-7xl font-bold text-navy leading-tight mb-8'>
-          Smart Packing Lists for Every Trip
-        </h1>
+      <section className='relative overflow-hidden border-b border-silver/80'>
+        <div
+          className='pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-sky/80 via-ivory to-ivory'
+          aria-hidden
+        />
+        <div
+          className='pointer-events-none absolute inset-0 opacity-[0.35]'
+          style={{
+            backgroundImage:
+              'radial-gradient(circle at 1px 1px, rgba(30,58,95,0.12) 1px, transparent 0)',
+            backgroundSize: '24px 24px',
+          }}
+          aria-hidden
+        />
 
-        {/* Value Proposition Text */}
-        <p className='text-xl text-slate/80 leading-relaxed mb-12 max-w-2xl mx-auto'>
-          Never forget an item again. Create customized packing lists in seconds and travel with
-          confidence.
-        </p>
+        <div className='relative mx-auto grid max-w-6xl items-center gap-12 px-8 py-16 lg:grid-cols-2 lg:gap-16 lg:py-24'>
+          <div>
+            <h1 className='text-4xl font-bold leading-tight tracking-tight text-navy sm:text-5xl lg:text-6xl'>
+              Never forget a{'\u00A0'}charger again.
+            </h1>
+            <p className='mt-5 max-w-lg text-lg leading-relaxed text-steel'>
+              Trip Ready turns a messy mental checklist into a packing list you can finish.
+              Track progress, search items, reuse what worked last trip.
+            </p>
+            <div className='mt-8 flex flex-col gap-3 sm:flex-row sm:items-center'>
+              <Link href='/lists' className='w-full sm:w-auto'>
+                <Button variant='primary' fullWidth>
+                  Create your list
+                </Button>
+              </Link>
+              <Link
+                href='/login'
+                className='text-center text-sm font-medium text-navy underline-offset-4 hover:underline sm:text-left sm:pl-2'
+              >
+                Already have an account? Log in
+              </Link>
+            </div>
+          </div>
 
-        {/* Call-to-Action Button */}
-        {/* Links to create-list page to start user journey */}
-        <Link href='/lists'>
-          <Button variant='primary'>Create Your List</Button>
-        </Link>
+          <PackingListCard items={HERO_LIST_ITEMS} />
+        </div>
       </section>
 
-      {/* Features Section: Key Benefits */}
-      {/* 
-        Purpose: Highlights main features/benefits of the app
-        Layout: 3-column grid on medium+ screens, stacked on mobile
-        Content: Icon, title, description for each feature
-      */}
-      <section className='max-w-6xl mx-auto px-8 pt-10'>
-        {/* Responsive Grid: 1 column on mobile, 3 columns on md+ screens */}
-        <div className='grid md:grid-cols-3 gap-12'>
-          {/* Feature 1: AI-Powered Suggestions */}
-          <div className='text-center'>
-            <div className='text-4xl mb-4'>🤖</div>
-            <h3 className='text-lg font-semibold text-navy mb-3'>AI-Powered Suggestions</h3>
-            <p className='text-slate/70 leading-relaxed'>
-              Smart recommendations based on your destination and trip type.
+      <ScrollPackDemo />
+
+      <section className='mx-auto max-w-6xl px-8 py-16 lg:py-20'>
+        <div className='max-w-2xl'>
+          <h2 className='text-2xl font-bold text-navy sm:text-3xl'>How it works</h2>
+          <p className='mt-2 text-steel'>Three steps from empty list to packed bag.</p>
+        </div>
+        <ol className='mt-10 grid gap-8 sm:grid-cols-3'>
+          {[
+            {
+              step: '01',
+              title: 'Create a list',
+              body: 'Name the trip and open a checklist in seconds.',
+            },
+            {
+              step: '02',
+              title: 'Add and check off',
+              body: 'Add items, mark them packed, and watch progress fill.',
+            },
+            {
+              step: '03',
+              title: 'Reuse next time',
+              body: 'Come back to saved lists instead of starting from zero.',
+            },
+          ].map((item) => (
+            <li key={item.step}>
+              <p className='text-xs font-semibold tracking-widest text-royal'>{item.step}</p>
+              <h3 className='mt-2 text-lg font-semibold text-navy'>{item.title}</h3>
+              <p className='mt-2 text-sm leading-relaxed text-steel'>{item.body}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className='border-y border-silver bg-white'>
+        <div className='mx-auto max-w-6xl px-8 py-16 lg:py-20'>
+          <div className='max-w-2xl'>
+            <h2 className='text-2xl font-bold text-navy sm:text-3xl'>Built for real trips</h2>
+            <p className='mt-2 text-steel'>
+              What works today, and what is next on the roadmap.
             </p>
           </div>
-
-          {/* Feature 2: Trip-Specific Lists */}
-          <div className='text-center'>
-            <div className='text-4xl mb-4'>⚙️</div>
-            <h3 className='text-lg font-semibold text-navy mb-3'>Trip-Specific Lists</h3>
-            <p className='text-slate/70 leading-relaxed'>
-              Tailored for beach trips, business travel, or adventures.
-            </p>
-          </div>
-
-          {/* Feature 3: Save and Reuse */}
-          <div className='text-center'>
-            <div className='text-4xl mb-4'>💾</div>
-            <h3 className='text-lg font-semibold text-navy mb-3'>Save and Reuse</h3>
-            <p className='text-slate/70 leading-relaxed'>
-              Build once, reuse for every future trip.
-            </p>
+          <div className='mt-10 grid gap-8 sm:grid-cols-3'>
+            <div>
+              <div className='mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-sky text-navy'>
+                <ListChecks className='h-5 w-5' aria-hidden />
+              </div>
+              <h3 className='text-lg font-semibold text-navy'>Packing progress</h3>
+              <p className='mt-2 text-sm leading-relaxed text-steel'>
+                Check items off and see how close you are to fully packed.
+              </p>
+            </div>
+            <div>
+              <div className='mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-sky text-navy'>
+                <Map className='h-5 w-5' aria-hidden />
+              </div>
+              <h3 className='text-lg font-semibold text-navy'>Trip-specific lists</h3>
+              <p className='mt-2 text-sm leading-relaxed text-steel'>
+                Separate lists for beach weekends, business travel, or adventures.
+              </p>
+            </div>
+            <div>
+              <div className='mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-sky text-navy'>
+                <Sparkles className='h-5 w-5' aria-hidden />
+              </div>
+              <div className='flex flex-wrap items-center gap-2'>
+                <h3 className='text-lg font-semibold text-navy'>AI-powered suggestions</h3>
+                <span className='rounded-full border border-silver bg-ivory px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-steel'>
+                  Coming soon
+                </span>
+              </div>
+              <p className='mt-2 text-sm leading-relaxed text-steel'>
+                Smart recommendations from destination and trip type. Planned next, not live yet.
+              </p>
+            </div>
           </div>
         </div>
       </section>
-    </main>
+
+      <footer className='border-t border-silver bg-white'>
+        <div className='mx-auto flex max-w-6xl flex-col gap-4 px-8 py-8 sm:flex-row sm:items-center sm:justify-between'>
+          <Link href='/' className='inline-flex items-center gap-2 text-sm font-semibold text-navy'>
+            <Luggage className='h-4 w-4' aria-hidden />
+            Trip Ready
+          </Link>
+          <nav className='flex flex-wrap gap-x-5 gap-y-2 text-sm text-steel'>
+            <Link href='/lists' className='hover:text-navy'>
+              Lists
+            </Link>
+            <Link href='/login' className='hover:text-navy'>
+              Log in
+            </Link>
+            <Link href='/signup' className='hover:text-navy'>
+              Sign up
+            </Link>
+          </nav>
+        </div>
+      </footer>
+    </div>
   );
 }
