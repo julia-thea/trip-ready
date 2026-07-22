@@ -15,7 +15,7 @@ function ListRow({ list }: { list: { id: string, title: string, items: Array<{ i
     };
 
     return (
-        <div key={list.id} className='bg-white border border-silver rounded-xl p-6 hover:shadow-md transition-all duration-200'>
+        <div key={list.id} className='bg-white border border-silver rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200'>
             {/* List Header: Title and Delete Button */}
             <div className='flex items-center justify-between mb-3'>
                 {/* List Title (Clickable Link to Detail Page) */}

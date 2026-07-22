@@ -74,11 +74,14 @@ export default async function ListsPage() {
         <h1 className='text-3xl font-bold text-navy mb-2'>Lists</h1>
 
         {/* Two-Column Layout: Lists on Left, Create Form on Right */}
-        <div className='grid grid-cols-2 gap-8'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
           {/* Left Column: List of All Lists */}
           <div className='space-y-4'>
             {lists.length === 0 ? (
-              <p className='text-sm text-steel'>No lists yet</p>
+              <div className='rounded-xl border border-dashed border-silver bg-ivory px-4 py-10 text-center'>
+                <p className='text-sm font-medium text-slate'>No lists yet</p>
+                <p className='mt-1 text-xs text-steel'>Create your first packing list to get started.</p>
+              </div>
             ) : (
               lists.map((list) => (
                 <ListRow key={list.id} list={list} />
@@ -88,7 +91,6 @@ export default async function ListsPage() {
 
           {/* Right Column: Create New List Form */}
           <div>
-            {/* CreateListForm is a Client Component (uses useActionState) */}
             <CreateListForm />
           </div>
         </div>

@@ -10,12 +10,12 @@ export default function ListsLoading() {
       <Navbar />
       <main className='max-w-4xl mx-auto px-8 py-12 animate-pulse'>
         <div className='h-9 w-32 bg-silver/70 rounded-lg mb-8' />
-        <div className='grid grid-cols-2 gap-8'>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
           <div className='space-y-4'>
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className='bg-white border border-silver rounded-xl p-6 space-y-3'
+                className='bg-white border border-silver rounded-xl p-6 space-y-3 shadow-sm'
               >
                 <div className='h-5 w-2/3 bg-silver/70 rounded' />
                 <div className='h-4 w-full bg-silver/50 rounded' />
@@ -23,10 +23,11 @@ export default function ListsLoading() {
               </div>
             ))}
           </div>
-          <div className='bg-white border border-silver rounded-xl p-6 space-y-4 h-fit'>
-            <div className='h-5 w-40 bg-silver/70 rounded' />
-            <div className='h-11 w-full bg-silver/50 rounded-xl' />
-            <div className='h-11 w-full bg-silver/70 rounded-xl' />
+          <div className='bg-white border border-silver rounded-xl p-6 space-y-4 h-fit shadow-sm'>
+            <div className='h-4 w-28 bg-silver/70 rounded' />
+            <div className='h-5 w-40 bg-silver/50 rounded' />
+            <div className='h-11 w-full bg-ivory rounded-xl border border-silver' />
+            <div className='h-11 w-full bg-sky/80 rounded-xl' />
           </div>
         </div>
       </main>

@@ -76,30 +76,28 @@ function AddItemForm({ listId }: { listId: string }) {
   }, [isPending, state]);
 
   return (
-    <div className='bg-white border border-silver rounded-xl p-6 hover:shadow-md transition-all duration-200'>
+    <div className='bg-white border border-silver rounded-xl p-6 shadow-sm'>
+      <h2 className='text-sm font-semibold uppercase tracking-wide text-steel mb-4'>Add item</h2>
       <form className='space-y-4' action={formAction}>
         {/* Item Name Input */}
         <div>
           <label htmlFor='itemName' className='block text-sm font-medium text-slate mb-2'>
-            Item Name
+            Item name
           </label>
           <input
             type='text'
             name='itemName'
             id='itemName'
-            // name='itemName' matches Server Action's formData.get('itemName')
-            className={`w-full px-4 py-3 rounded-xl border ${state.error
+            className={`w-full px-4 py-3 rounded-xl border bg-ivory focus:bg-white ${state.error
               ? 'border-red-500 focus:ring-red-500'
               : 'border-silver focus:border-navy focus:ring-navy'
               } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all`}
             placeholder='e.g. Phone charger'
             ref={inputRef}
           />
-          {/* Display validation error if present */}
           {state.error && <p className='mt-2 text-sm text-red-500'>{state.error}</p>}
         </div>
 
-        {/* Quantity Input */}
         <div>
           <label htmlFor='quantity' className='block text-sm font-medium text-slate mb-2'>
             Quantity
@@ -110,21 +108,12 @@ function AddItemForm({ listId }: { listId: string }) {
             id='quantity'
             min='0'
             defaultValue='1'
-            // defaultValue: Uncontrolled input (value set once, user can change)
-            // Server Action parses this as string and converts to number
-            className='w-full px-4 py-3 rounded-xl border border-silver focus:border-navy focus:ring-navy focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all'
+            className='w-full px-4 py-3 rounded-xl border border-silver bg-ivory focus:bg-white focus:border-navy focus:ring-navy focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all'
           />
         </div>
 
-        {/* Hidden Input: List ID */}
-        {/* 
-          Hidden field passes listId to Server Action:
-          - Server Action reads this via formData.get('listId')
-          - Required to know which list to add the item to
-        */}
         <input type='hidden' name='listId' value={listId} />
 
-        {/* Submit Button */}
         <Button type='submit' variant='secondary' disabled={isPending} fullWidth>
           {isPending ? 'Adding...' : 'Add Item'}
         </Button>

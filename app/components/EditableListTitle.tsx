@@ -77,7 +77,6 @@ function EditableListTitle({ listId, title }: EditableListTitleProps) {
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Enter') {
       event.preventDefault();
-      // Blur triggers a single save path (avoids Enter + blur double-save)
       inputRef.current?.blur();
     }
     if (event.key === 'Escape') {
@@ -101,28 +100,32 @@ function EditableListTitle({ listId, title }: EditableListTitleProps) {
           onBlur={saveTitle}
           disabled={isPending}
           aria-label='List title'
-          className='w-full text-3xl font-bold text-navy bg-white border border-silver rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy disabled:opacity-60'
+          className='w-full text-3xl font-bold text-navy bg-ivory border border-silver rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy focus:bg-white disabled:opacity-60 transition-all'
         />
-        <p className='mt-2 text-xs text-steel'>Enter to save · Esc to cancel</p>
-        {error && (
-          <p className='mt-1 text-sm text-red-500' role='alert'>
-            {error}
+        <div className='mt-2 flex items-center justify-between gap-3'>
+          <p className='text-xs text-steel'>
+            {isPending ? 'Saving…' : 'Enter to save · Esc to cancel'}
           </p>
-        )}
+          {error && (
+            <p className='text-sm text-red-500' role='alert'>
+              {error}
+            </p>
+          )}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className='mb-6 flex items-center gap-3'>
+    <div className='mb-6 flex flex-wrap items-center gap-3'>
       <h1 className='text-3xl font-bold text-navy'>{title}</h1>
       <button
         type='button'
         onClick={startEditing}
-        className='inline-flex items-center gap-1.5 text-sm font-medium text-steel hover:text-navy px-2.5 py-1.5 rounded-lg hover:bg-sky/60 transition-colors'
+        className='inline-flex items-center gap-1.5 text-sm font-medium text-navy border border-silver bg-white hover:bg-sky/50 hover:border-navy/20 px-3 py-1.5 rounded-xl transition-colors'
         title='Edit title'
       >
-        <Pencil className='w-4 h-4' aria-hidden />
+        <Pencil className='w-3.5 h-3.5 text-steel' aria-hidden />
         Edit
       </button>
     </div>

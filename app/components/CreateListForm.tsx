@@ -55,49 +55,34 @@ function CreateListForm() {
     const [state, formAction, isPending] = useActionState(createList, { error: '' });
 
     return (
-        <>
-            <div className='bg-white border border-silver rounded-xl p-6'>
-                <div className='w-full'>
-                    {/* Form with Server Action */}
-                    <form className='space-y-6' action={formAction}>
-                        <div>
-                            {/* List Title Input */}
-                            {/* 
-                              Controlled input:
-                              - value: Controlled by title state
-                              - onChange: Updates title state
-                              - name: 'title' matches Server Action's formData.get('title')
-                              - Conditional styling: Red border if validation error
-                            */}
-                            <input
-                                name='title'
-                                id='title'
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                className={`w-full px-4 py-3 rounded-xl border ${state.error
-                                    ? 'border-red-500 focus:ring-red-500'
-                                    : 'border-silver focus:border-navy focus:ring-navy'
-                                    } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all`}
-                                placeholder='list title'
-                            />
-                            {/* Display validation error if present */}
-                            {state.error && <p className='mt-2 text-sm text-red-500'>{state.error}</p>}
-                        </div>
-
-                        {/* Submit Button */}
-                        {/* 
-                          Button state:
-                          - disabled: Prevents double submission while pending
-                          - Text changes: "Creating..." during submission
-                          - fullWidth: Takes full width of form
-                        */}
-                        <Button type='submit' variant='secondary' disabled={isPending} fullWidth>
-                            {isPending ? 'Creating...' : 'Create List'}
-                        </Button>
-                    </form>
+        <div className='bg-white border border-silver rounded-xl p-6 shadow-sm'>
+            <h2 className='text-sm font-semibold uppercase tracking-wide text-steel mb-4'>
+                Create a list
+            </h2>
+            <form className='space-y-4' action={formAction}>
+                <div>
+                    <label htmlFor='title' className='block text-sm font-medium text-slate mb-2'>
+                        List title
+                    </label>
+                    <input
+                        name='title'
+                        id='title'
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        className={`w-full px-4 py-3 rounded-xl border bg-ivory focus:bg-white ${state.error
+                            ? 'border-red-500 focus:ring-red-500'
+                            : 'border-silver focus:border-navy focus:ring-navy'
+                            } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all`}
+                        placeholder='e.g. Weekend in Iceland'
+                    />
+                    {state.error && <p className='mt-2 text-sm text-red-500'>{state.error}</p>}
                 </div>
-            </div>
-        </>
+
+                <Button type='submit' variant='secondary' disabled={isPending} fullWidth>
+                    {isPending ? 'Creating...' : 'Create List'}
+                </Button>
+            </form>
+        </div>
     );
 }
 

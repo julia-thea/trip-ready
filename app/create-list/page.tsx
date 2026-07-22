@@ -1,46 +1,25 @@
-/**
- * Create List Page Component
- * 
- * Dedicated page for creating a new packing list.
- * This is a simple wrapper around the CreateListForm component.
- * 
- * Component Type: Server Component
- * - No 'use client' directive = Server Component
- * - Renders on server, sent as HTML to client
- * - CreateListForm is a Client Component (handles form state)
- * 
- * Note: CreateListForm is also used on /lists page (right column).
- * This page provides a dedicated route for list creation.
- * 
- * Route: /create-list
- * - Accessible via navigation or direct URL
- * - Protected by middleware.ts (requires authentication)
- */
 import CreateListForm from '../components/CreateListForm';
+import Navbar from '../components/Navbar';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
-import React from 'react'
-
-/**
- * CreateListPage Component
- * 
- * Simple page wrapper that renders the CreateListForm component.
- * The form component handles all the logic (state, validation, submission).
- * 
- * @returns JSX with CreateListForm component
- */
-function page() {
+function CreateListPage() {
   return (
-    <div>
-      {/* 
-        CreateListForm Component:
-        - Client Component (uses 'use client')
-        - Handles form state with useActionState
-        - Calls createList Server Action
-        - Redirects to /lists on success
-      */}
-      <CreateListForm />
+    <div className='min-h-screen bg-gradient-to-b from-slate-50 to-white'>
+      <Navbar />
+      <main className='max-w-md mx-auto px-8 pt-8 pb-16'>
+        <Link
+          href='/lists'
+          className='inline-flex items-center gap-1.5 text-sm font-medium text-steel hover:text-navy transition-colors mb-6'
+        >
+          <ArrowLeft className='h-4 w-4' aria-hidden />
+          Back to lists
+        </Link>
+        <h1 className='text-3xl font-bold text-navy mb-6'>Create a list</h1>
+        <CreateListForm />
+      </main>
     </div>
-  )
+  );
 }
 
-export default page
+export default CreateListPage;

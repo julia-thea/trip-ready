@@ -107,34 +107,33 @@ function UpdateItemRow({ item, listId }: { item: { id: string, name: string, qua
     };
 
     return (
-        <li key={item.id} className='flex items-center justify-between text-lg'>
-            {/* Item Name */}
-            {/* Strikethrough styling applied via CSS classes */}
-            <span className={'text-slate'}>
+        <li className='flex items-center justify-between gap-3 py-3 first:pt-0 last:pb-0'>
+            <span
+                className={`text-sm font-medium ${
+                    optimisticPacked ? 'text-steel line-through' : 'text-slate'
+                }`}
+            >
                 {item.name}
             </span>
 
-            {/* Right Side: Quantity, Packed Status, Delete */}
-            <span className='flex items-center gap-3'>
-                {/* Quantity Display */}
-                <span className='text-steel text-xs'>×{item.quantity}</span>
+            <span className='flex items-center gap-2 shrink-0'>
+                <span className='text-steel text-xs tabular-nums'>×{item.quantity}</span>
 
-                {/* Packed Status and Checkbox */}
-                <span className={`text-xs font-medium ${optimisticPacked ? 'text-green-600' : 'text-steel'}`}>
-                    {/* Status Text: Changes based on optimisticPacked */}
-                    {optimisticPacked ? 'Packed' : 'Not packed'}
-                    {/* Checkbox: Controlled by optimisticPacked */}
+                <label className='inline-flex items-center gap-1.5 text-xs font-medium text-steel cursor-pointer'>
+                    <span className={optimisticPacked ? 'text-royal' : 'text-steel'}>
+                        {optimisticPacked ? 'Packed' : 'Not packed'}
+                    </span>
                     <input
                         type='checkbox'
                         checked={optimisticPacked}
                         onChange={handleToggle}
-                        className='ml-2'
+                        className='h-4 w-4 rounded border-silver text-royal accent-royal'
                     />
-                </span>
+                </label>
 
-                {/* Delete Button */}
                 <button
-                    className="text-xs text-red-500 hover:text-red-700 font-medium px-2 py-1 rounded bg-red-100 transition-colors"
+                    type='button'
+                    className='text-xs text-red-500 hover:text-red-700 font-medium px-2.5 py-1 rounded-lg bg-red-50 hover:bg-red-100 transition-colors'
                     onClick={handleDelete}
                 >
                     Delete
