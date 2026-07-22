@@ -16,8 +16,8 @@
  * - auth.config.ts has edge-safe configuration only
  * 
  * Protected Routes:
- * - /dashboard - User dashboard
- * - /lists - All lists page
+ * - /dashboard - Redirects to /lists (legacy path)
+ * - /lists - Dashboard (packing lists home)
  * - /create-list - Create new list page
  * - /create-item - Create new item page (if exists)
  * 

@@ -1,89 +1,94 @@
 /**
- * CreateListForm Component
- * 
- * Form for creating a new packing list.
- * Uses Server Actions with useActionState for form submission and validation.
- * 
- * Component Type: Client Component
- * - Uses 'use client' directive
- * - Requires client-side because it uses:
- *   - useState for form input
- *   - useActionState for Server Action integration
- *   - Event handlers (onChange)
- * 
- * Features:
- * - Server-side validation (via Server Action)
- * - Loading state during submission
- * - Error display
- * - Automatic redirect on success (handled by Server Action)
- * 
- * Usage:
- * - Used on /create-list page (dedicated page)
- * - Used on /lists page (right column, inline)
+ * CreateListForm
+ *
+ * full: empty-state card with helper copy (first list).
+ * compact: inline title + button (returning users).
  */
 'use client';
+
 import { useState, useActionState } from 'react';
 import { createList } from '../actions/lists';
 import Button from './Button';
 
-/**
- * CreateListForm Component
- * 
- * Form component for creating a new packing list.
- * 
- * State:
- * - title: Controlled input value
- * - state: Server Action state (contains error messages)
- * - formAction: Wrapped Server Action for form submission
- * - isPending: Loading state during submission
- */
-function CreateListForm() {
-    // Controlled input state
-    const [title, setTitle] = useState('');
+type CreateListFormProps = {
+  variant?: 'full' | 'compact';
+};
 
-    /**
-     * useActionState Hook
-     * 
-     * Integrates form with Server Action:
-     * - createList: Server Action function (app/actions/lists.ts)
-     * - { error: '' }: Initial state (empty error)
-     * - Returns: [state, formAction, isPending]
-     *   - state: Current state from Server Action (error messages)
-     *   - formAction: Wrapped action for form submission
-     *   - isPending: True while action is running
-     */
-    const [state, formAction, isPending] = useActionState(createList, { error: '' });
+function CreateListForm({ variant = 'full' }: CreateListFormProps) {
+  const [title, setTitle] = useState('');
+  const [state, formAction, isPending] = useActionState(createList, { error: '' });
 
+  const inputClass = `w-full px-4 py-3 rounded-xl border bg-ivory focus:bg-white ${
+    state.error
+      ? 'border-red-500 focus:ring-red-500'
+      : 'border-silver focus:border-navy focus:ring-navy'
+  } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all`;
+
+  if (variant === 'compact') {
     return (
-        <div className='bg-white border border-silver rounded-xl p-6 shadow-sm'>
-            <h2 className='text-sm font-semibold uppercase tracking-wide text-steel mb-4'>
-                Create a list
-            </h2>
-            <form className='space-y-4' action={formAction}>
-                <div>
-                    <label htmlFor='title' className='block text-sm font-medium text-slate mb-2'>
-                        List title
-                    </label>
-                    <input
-                        name='title'
-                        id='title'
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        className={`w-full px-4 py-3 rounded-xl border bg-ivory focus:bg-white ${state.error
-                            ? 'border-red-500 focus:ring-red-500'
-                            : 'border-silver focus:border-navy focus:ring-navy'
-                            } focus:outline-none focus:ring-2 focus:ring-opacity-20 transition-all`}
-                        placeholder='e.g. Weekend in Iceland'
-                    />
-                    {state.error && <p className='mt-2 text-sm text-red-500'>{state.error}</p>}
-                </div>
-
-                <Button type='submit' variant='secondary' disabled={isPending} fullWidth>
-                    {isPending ? 'Creating...' : 'Create List'}
-                </Button>
-            </form>
-        </div>
+      <div className='rounded-xl border border-silver bg-white px-4 py-3 shadow-sm'>
+        <form
+          className='flex flex-col gap-3 sm:flex-row sm:items-start'
+          action={formAction}
+        >
+          <div className='min-w-0 flex-1'>
+            <label htmlFor='title' className='sr-only'>
+              List title
+            </label>
+            <input
+              name='title'
+              id='title'
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className={inputClass}
+              placeholder='New list title'
+              autoComplete='off'
+            />
+            {state.error && (
+              <p className='mt-2 text-sm text-red-500' role='alert'>
+                {state.error}
+              </p>
+            )}
+          </div>
+          <Button type='submit' variant='primary' disabled={isPending}>
+            {isPending ? 'Creating...' : 'Create list'}
+          </Button>
+        </form>
+      </div>
     );
+  }
+
+  return (
+    <div className='rounded-xl border border-silver bg-white p-6 shadow-sm'>
+      <h2 className='text-base font-semibold text-navy mb-1'>Create a list</h2>
+      <p className='text-sm text-steel mb-4'>Give the trip a name you will recognize later.</p>
+      <form className='space-y-4' action={formAction}>
+        <div>
+          <label htmlFor='title' className='block text-sm font-medium text-slate mb-2'>
+            List title
+          </label>
+          <input
+            name='title'
+            id='title'
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className={inputClass}
+            placeholder='e.g. Weekend in Iceland'
+            autoComplete='off'
+          />
+          {state.error && (
+            <p className='mt-2 text-sm text-red-500' role='alert'>
+              {state.error}
+            </p>
+          )}
+        </div>
+
+        <Button type='submit' variant='primary' disabled={isPending} fullWidth>
+          {isPending ? 'Creating...' : 'Create list'}
+        </Button>
+      </form>
+    </div>
+  );
 }
 
 export default CreateListForm;

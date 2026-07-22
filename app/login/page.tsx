@@ -3,12 +3,13 @@
  *
  * Client-side form for user authentication.
  * Handles email/password login using Auth.js (NextAuth).
+ * Signed-in users are redirected to the dashboard.
  */
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { Eye, EyeOff } from 'lucide-react';
 import Button from '../components/Button';
 import AuthShell, {
@@ -28,12 +29,19 @@ function validatePassword(password: string): string {
 }
 
 function LoginForm() {
+  const { status } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      window.location.replace('/lists');
+    }
+  }, [status]);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -60,8 +68,18 @@ function LoginForm() {
       setError('Invalid email or password');
       setLoading(false);
     } else {
-      window.location.href = '/dashboard';
+      window.location.href = '/lists';
     }
+  }
+
+  if (status === 'loading' || status === 'authenticated') {
+    return (
+      <AuthShell>
+        <p className='text-center text-steel text-sm'>
+          {status === 'authenticated' ? 'Taking you to your dashboard...' : 'Loading...'}
+        </p>
+      </AuthShell>
+    );
   }
 
   return (

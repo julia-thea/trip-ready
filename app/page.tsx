@@ -1,11 +1,10 @@
-import Link from 'next/link';
 import {
   ListChecks,
-  Luggage,
   Map,
   Sparkles,
 } from 'lucide-react';
-import Button from './components/Button';
+import HeroAuthActions from './components/HeroAuthActions';
+import LandingFooter from './components/LandingFooter';
 import Navbar from './components/Navbar';
 import PackingListCard from './components/PackingListCard';
 import ScrollPackDemo from './components/ScrollPackDemo';
@@ -48,19 +47,7 @@ export default function HomePage() {
               Trip Ready turns a messy mental checklist into a packing list you can finish.
               Track progress, search items, reuse what worked last trip.
             </p>
-            <div className='mt-8 flex flex-col gap-3 sm:flex-row sm:items-center'>
-              <Link href='/lists' className='w-full sm:w-auto'>
-                <Button variant='primary' fullWidth>
-                  Create your list
-                </Button>
-              </Link>
-              <Link
-                href='/login'
-                className='text-center text-sm font-medium text-navy underline-offset-4 hover:underline sm:text-left sm:pl-2'
-              >
-                Already have an account? Log in
-              </Link>
-            </div>
+            <HeroAuthActions />
           </div>
 
           <PackingListCard items={HERO_LIST_ITEMS} />
@@ -146,25 +133,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <footer className='border-t border-silver bg-white'>
-        <div className='mx-auto flex max-w-6xl flex-col gap-4 px-8 py-8 sm:flex-row sm:items-center sm:justify-between'>
-          <Link href='/' className='inline-flex items-center gap-2 text-sm font-semibold text-navy'>
-            <Luggage className='h-4 w-4' aria-hidden />
-            Trip Ready
-          </Link>
-          <nav className='flex flex-wrap gap-x-5 gap-y-2 text-sm text-steel'>
-            <Link href='/lists' className='hover:text-navy'>
-              Lists
-            </Link>
-            <Link href='/login' className='hover:text-navy'>
-              Log in
-            </Link>
-            <Link href='/signup' className='hover:text-navy'>
-              Sign up
-            </Link>
-          </nav>
-        </div>
-      </footer>
+      <LandingFooter />
     </div>
   );
 }

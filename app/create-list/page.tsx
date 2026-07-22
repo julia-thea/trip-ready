@@ -13,10 +13,10 @@ function CreateListPage() {
           className='inline-flex items-center gap-1.5 text-sm font-medium text-steel hover:text-navy transition-colors mb-6'
         >
           <ArrowLeft className='h-4 w-4' aria-hidden />
-          Back to lists
+          Back to dashboard
         </Link>
         <h1 className='text-3xl font-bold text-navy mb-6'>Create a list</h1>
-        <CreateListForm />
+        <CreateListForm variant='full' />
       </main>
     </div>
   );

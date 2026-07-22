@@ -1,124 +1,97 @@
 /**
- * Lists Page Component
- * 
- * Displays all packing lists with their items in a two-column layout.
- * Left column: List of all lists with their items
- * Right column: Form to create a new list
- * 
- * Component Type: Server Component
- * - No 'use client' directive = Server Component
- * - Can directly query database with Prisma (no API route needed)
- * - Renders on server, sent as HTML to client
- * - Better performance (no client-side data fetching)
- * 
- * Data Fetching:
- * - Uses Prisma to query database directly
- * - Includes related items using Prisma's include feature
- * - No API route needed (Server Component pattern)
- * 
- * Layout:
- * - Two-column grid: lists on left, create form on right
- * - Each list is a card showing title, items, and packed status
- * - Lists link to detail pages (/lists/[id])
+ * Dashboard (lists index)
+ *
+ * Logged-in home: existing lists first when present; create is full only when empty.
  */
 import { prisma } from '@/lib/prisma';
-import Link from 'next/link';
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import CreateListForm from '../components/CreateListForm';
 import ListRow from '../components/ListRow';
 
-/**
- * ListsPage Component
- * 
- * Fetches all lists with their items and displays them.
- * 
- * @returns JSX for the lists page
- */
-export default async function ListsPage() {
-  /**
-   * Prisma Query: Fetch All Lists with Items
-   * 
-   * Uses Prisma's include feature to perform a JOIN query.
-   * This fetches lists and their related items in a single database query.
-   * 
-   * include: { items: true }
-   * - Performs SQL JOIN to get items for each list
-   * - Avoids N+1 query problem (one query instead of one per list)
-   * - Items are nested in list.items array
-   * 
-   * Result Structure:
-   * [
-   *   {
-   *     id: "...",
-   *     title: "...",
-   *     items: [
-   *       { id: "...", name: "...", packed: true, ... },
-   *       ...
-   *     ]
-   *   },
-   *   ...
-   * ]
-   */
-  const lists = await prisma.list.findMany({
-    include: {
-      items: true, // This fetches items for each list
-    },
+type ListWithItems = {
+  id: string;
+  title: string;
+  updatedAt: Date;
+  items: Array<{ id: string; name: string; packed: boolean; quantity: number }>;
+};
+
+function isComplete(list: ListWithItems): boolean {
+  return list.items.length > 0 && list.items.every((item) => item.packed);
+}
+
+/** Incomplete (and empty) lists first, then most recently updated. */
+function sortForDashboard(lists: ListWithItems[]): ListWithItems[] {
+  return [...lists].sort((a, b) => {
+    const aDone = isComplete(a);
+    const bDone = isComplete(b);
+    if (aDone !== bDone) return aDone ? 1 : -1;
+    return b.updatedAt.getTime() - a.updatedAt.getTime();
   });
+}
+
+export default async function ListsPage() {
+  const session = await auth();
+  if (!session) {
+    redirect('/login');
+  }
+
+  const lists = sortForDashboard(
+    await prisma.list.findMany({
+      include: {
+        items: true,
+      },
+    })
+  );
+
+  const hasLists = lists.length > 0;
 
   return (
     <div className='min-h-screen bg-gradient-to-b from-slate-50 to-white'>
-      {/* Global Navigation */}
       <Navbar />
 
-      <main className='max-w-4xl mx-auto px-8 py-12'>
-        <h1 className='text-3xl font-bold text-navy mb-2'>Lists</h1>
+      <main className='mx-auto max-w-3xl px-8 py-8 sm:py-10'>
+        <header className={hasLists ? 'mb-6' : 'mb-6'}>
+          <h1 className='text-3xl font-bold text-navy'>Dashboard</h1>
+          {!hasLists && (
+            <p className='mt-2 text-steel text-sm leading-relaxed'>
+              Create a list to start packing.
+            </p>
+          )}
+        </header>
 
-        {/* Two-Column Layout: Lists on Left, Create Form on Right */}
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-          {/* Left Column: List of All Lists */}
-          <div className='space-y-4'>
-            {lists.length === 0 ? (
-              <div className='rounded-xl border border-dashed border-silver bg-ivory px-4 py-10 text-center'>
-                <p className='text-sm font-medium text-slate'>No lists yet</p>
-                <p className='mt-1 text-xs text-steel'>Create your first packing list to get started.</p>
-              </div>
-            ) : (
-              lists.map((list) => (
-                <ListRow key={list.id} list={list} />
-              ))
-            )}
-          </div>
+        {hasLists ? (
+          <>
+            <section className='mb-8' aria-labelledby='create-list-heading'>
+              <h2 id='create-list-heading' className='text-sm font-medium text-steel mb-3'>
+                New list
+              </h2>
+              <CreateListForm variant='compact' />
+            </section>
 
-          {/* Right Column: Create New List Form */}
-          <div>
-            <CreateListForm />
-          </div>
-        </div>
+            <section aria-labelledby='lists-heading'>
+              <h2 id='lists-heading' className='text-sm font-medium text-steel mb-3'>
+                {lists.length === 1 ? '1 list' : `${lists.length} lists`}
+              </h2>
+              <ul className='space-y-2.5'>
+                {lists.map((list) => (
+                  <li key={list.id}>
+                    <ListRow list={list} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </>
+        ) : (
+          <section aria-labelledby='create-list-heading'>
+            <h2 id='create-list-heading' className='sr-only'>
+              Create a list
+            </h2>
+            <CreateListForm variant='full' />
+          </section>
+        )}
       </main>
     </div>
   );
 }
-
-/**
- * Learning Reference: Evolution of This Component
- * 
- * This commented code shows the evolution from Client Component to Server Component.
- * 
- * Approach 1: Client Component with API Route
- * - Component marked with 'use client'
- * - Uses fetch() to call /api/lists endpoint
- * - API route queries database
- * - More network requests, slower
- * 
- * Approach 2: Server Component with Direct Prisma (Current)
- * - No 'use client' directive
- * - Directly queries database with Prisma
- * - No API route needed
- * - Faster, better performance
- * 
- * Why Server Component is Better:
- * - Renders on server (faster initial load)
- * - No client-side JavaScript needed for data fetching
- * - Better SEO (content in HTML)
- * - Simpler code (no API route needed)
- */

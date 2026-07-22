@@ -17,7 +17,7 @@ export default function ListNotFound() {
             This packing list doesn&apos;t exist or may have been deleted.
           </p>
           <Link href='/lists'>
-            <Button variant='primary'>Back to lists</Button>
+            <Button variant='primary'>Back to dashboard</Button>
           </Link>
         </div>
       </main>

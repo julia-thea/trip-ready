@@ -6,8 +6,9 @@
  */
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { Check, Eye, EyeOff } from 'lucide-react';
 import Button from '../components/Button';
 import AuthShell, {
@@ -28,6 +29,7 @@ function validatePassword(password: string): string {
 }
 
 function SignupForm() {
+  const { status } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -35,6 +37,12 @@ function SignupForm() {
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      window.location.replace('/lists');
+    }
+  }, [status]);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -74,6 +82,16 @@ function SignupForm() {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (status === 'loading' || status === 'authenticated') {
+    return (
+      <AuthShell>
+        <p className='text-center text-steel text-sm'>
+          {status === 'authenticated' ? 'Taking you to your dashboard...' : 'Loading...'}
+        </p>
+      </AuthShell>
+    );
   }
 
   if (success) {

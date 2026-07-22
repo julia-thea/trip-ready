@@ -37,7 +37,7 @@ async function ListDetailPage({ params }: { params: Promise<{ id: string }> }) {
             className='inline-flex items-center gap-1.5 text-sm font-medium text-steel hover:text-navy transition-colors'
           >
             <ArrowLeft className='h-4 w-4' aria-hidden />
-            Back to lists
+            Back to dashboard
           </Link>
         </div>
 
